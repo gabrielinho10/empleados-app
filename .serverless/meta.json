@@ -1,0 +1,921 @@
+{
+  "C:\\Users\\Gabriel Beltran\\empleados-app": {
+    "versionSfCore": null,
+    "versionFramework": "4.3.2",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {
+      "default-aws-credential-resolver": "<REDACTED>"
+    },
+    "composeServiceName": null,
+    "servicePath": "C:\\Users\\Gabriel Beltran\\empleados-app",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "empleados-app",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs18.x",
+        "stage": "dev",
+        "region": "us-east-1",
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "GetEmpleadosLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/empleados-app-dev-getEmpleados"
+              }
+            },
+            "CreateEmpleadoLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/empleados-app-dev-createEmpleado"
+              }
+            },
+            "DeleteEmpleadoLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/empleados-app-dev-deleteEmpleado"
+              }
+            },
+            "UpdateEmpleadoLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/empleados-app-dev-updateEmpleado"
+              }
+            },
+            "IamRoleLambdaExecution": {
+              "Type": "AWS::IAM::Role",
+              "Properties": {
+                "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": [
+                          "lambda.amazonaws.com"
+                        ]
+                      },
+                      "Action": [
+                        "sts:AssumeRole"
+                      ]
+                    }
+                  ]
+                },
+                "Policies": [
+                  {
+                    "PolicyName": {
+                      "Fn::Join": [
+                        "-",
+                        [
+                          "empleados-app",
+                          "dev",
+                          "lambda"
+                        ]
+                      ]
+                    },
+                    "PolicyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:CreateLogStream",
+                            "logs:CreateLogGroup",
+                            "logs:TagResource"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/empleados-app-dev*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:PutLogEvents"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/empleados-app-dev*:*:*"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "Path": "/",
+                "RoleName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "empleados-app",
+                      "dev",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "lambdaRole"
+                    ]
+                  ]
+                }
+              }
+            },
+            "GetEmpleadosLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-37650ac3-7014",
+                  "S3Key": "serverless/empleados-app/dev/1726230271975-2024-09-13T12:24:31.975Z/empleados-app.zip"
+                },
+                "Handler": "handler.getEmpleados",
+                "Runtime": "nodejs18.x",
+                "FunctionName": "empleados-app-dev-getEmpleados",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "GetEmpleadosLogGroup"
+              ]
+            },
+            "CreateEmpleadoLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-37650ac3-7014",
+                  "S3Key": "serverless/empleados-app/dev/1726230271975-2024-09-13T12:24:31.975Z/empleados-app.zip"
+                },
+                "Handler": "handler.createEmpleado",
+                "Runtime": "nodejs18.x",
+                "FunctionName": "empleados-app-dev-createEmpleado",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "CreateEmpleadoLogGroup"
+              ]
+            },
+            "DeleteEmpleadoLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-37650ac3-7014",
+                  "S3Key": "serverless/empleados-app/dev/1726230271975-2024-09-13T12:24:31.975Z/empleados-app.zip"
+                },
+                "Handler": "handler.deleteEmpleado",
+                "Runtime": "nodejs18.x",
+                "FunctionName": "empleados-app-dev-deleteEmpleado",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "DeleteEmpleadoLogGroup"
+              ]
+            },
+            "UpdateEmpleadoLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-us-east-1-37650ac3-7014",
+                  "S3Key": "serverless/empleados-app/dev/1726230271975-2024-09-13T12:24:31.975Z/empleados-app.zip"
+                },
+                "Handler": "handler.updateEmpleado",
+                "Runtime": "nodejs18.x",
+                "FunctionName": "empleados-app-dev-updateEmpleado",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "UpdateEmpleadoLogGroup"
+              ]
+            },
+            "GetEmpleadosLambdaVersiontXlNQLKmOV458x0hVIzdPqkt91F3n6Bop8JmG1niPz4": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "GetEmpleadosLambdaFunction"
+                },
+                "CodeSha256": "xBsPQb+IeQfDJTn7miEugydHVlVfTvm4ld5Z1QUpKRI="
+              }
+            },
+            "CreateEmpleadoLambdaVersionzsygojWXBwsmy4zNycYZ1FAz7ugopPOgM6RETikE": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "CreateEmpleadoLambdaFunction"
+                },
+                "CodeSha256": "xBsPQb+IeQfDJTn7miEugydHVlVfTvm4ld5Z1QUpKRI="
+              }
+            },
+            "DeleteEmpleadoLambdaVersion7M9sOSmo0bq9HvM0CWDRIyoKYTnritxIWrrfphH0k": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "DeleteEmpleadoLambdaFunction"
+                },
+                "CodeSha256": "xBsPQb+IeQfDJTn7miEugydHVlVfTvm4ld5Z1QUpKRI="
+              }
+            },
+            "UpdateEmpleadoLambdaVersionvjAWLC70FpGKleTHUBYvAUUATuBnYY7hHFLvIUlhxM": {
+              "Type": "AWS::Lambda::Version",
+              "DeletionPolicy": "Retain",
+              "Properties": {
+                "FunctionName": {
+                  "Ref": "UpdateEmpleadoLambdaFunction"
+                },
+                "CodeSha256": "xBsPQb+IeQfDJTn7miEugydHVlVfTvm4ld5Z1QUpKRI="
+              }
+            },
+            "ApiGatewayRestApi": {
+              "Type": "AWS::ApiGateway::RestApi",
+              "Properties": {
+                "Name": "dev-empleados-app",
+                "EndpointConfiguration": {
+                  "Types": [
+                    "EDGE"
+                  ]
+                },
+                "Policy": ""
+              }
+            },
+            "ApiGatewayResourceEmpleados": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Fn::GetAtt": [
+                    "ApiGatewayRestApi",
+                    "RootResourceId"
+                  ]
+                },
+                "PathPart": "empleados",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayResourceEmpleadosIdVar": {
+              "Type": "AWS::ApiGateway::Resource",
+              "Properties": {
+                "ParentId": {
+                  "Ref": "ApiGatewayResourceEmpleados"
+                },
+                "PathPart": "{id}",
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                }
+              }
+            },
+            "ApiGatewayMethodEmpleadosGet": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "GET",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceEmpleados"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "GetEmpleadosLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "GetEmpleadosLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodEmpleadosPost": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "POST",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceEmpleados"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "CreateEmpleadoLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "CreateEmpleadoLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodEmpleadosIdVarDelete": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "DELETE",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceEmpleadosIdVar"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "DeleteEmpleadoLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "DeleteEmpleadoLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayMethodEmpleadosIdVarPut": {
+              "Type": "AWS::ApiGateway::Method",
+              "Properties": {
+                "HttpMethod": "PUT",
+                "RequestParameters": {},
+                "ResourceId": {
+                  "Ref": "ApiGatewayResourceEmpleadosIdVar"
+                },
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "ApiKeyRequired": "<REDACTED>",
+                "AuthorizationType": "NONE",
+                "Integration": {
+                  "IntegrationHttpMethod": "POST",
+                  "Type": "AWS_PROXY",
+                  "Uri": {
+                    "Fn::Join": [
+                      "",
+                      [
+                        "arn:",
+                        {
+                          "Ref": "AWS::Partition"
+                        },
+                        ":apigateway:",
+                        {
+                          "Ref": "AWS::Region"
+                        },
+                        ":lambda:path/2015-03-31/functions/",
+                        {
+                          "Fn::GetAtt": [
+                            "UpdateEmpleadoLambdaFunction",
+                            "Arn"
+                          ]
+                        },
+                        "/invocations"
+                      ]
+                    ]
+                  }
+                },
+                "MethodResponses": []
+              },
+              "DependsOn": [
+                "UpdateEmpleadoLambdaPermissionApiGateway"
+              ]
+            },
+            "ApiGatewayDeployment1726230209278": {
+              "Type": "AWS::ApiGateway::Deployment",
+              "Properties": {
+                "RestApiId": {
+                  "Ref": "ApiGatewayRestApi"
+                },
+                "StageName": "dev"
+              },
+              "DependsOn": [
+                "ApiGatewayMethodEmpleadosGet",
+                "ApiGatewayMethodEmpleadosPost",
+                "ApiGatewayMethodEmpleadosIdVarDelete",
+                "ApiGatewayMethodEmpleadosIdVarPut"
+              ]
+            },
+            "GetEmpleadosLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "GetEmpleadosLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "CreateEmpleadoLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "CreateEmpleadoLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "DeleteEmpleadoLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "DeleteEmpleadoLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "UpdateEmpleadoLambdaPermissionApiGateway": {
+              "Type": "AWS::Lambda::Permission",
+              "Properties": {
+                "FunctionName": {
+                  "Fn::GetAtt": [
+                    "UpdateEmpleadoLambdaFunction",
+                    "Arn"
+                  ]
+                },
+                "Action": "lambda:InvokeFunction",
+                "Principal": "apigateway.amazonaws.com",
+                "SourceArn": {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:",
+                      {
+                        "Ref": "AWS::Partition"
+                      },
+                      ":execute-api:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":",
+                      {
+                        "Ref": "ApiGatewayRestApi"
+                      },
+                      "/*/*"
+                    ]
+                  ]
+                }
+              }
+            },
+            "EmpleadosTable": {
+              "Type": "AWS::DynamoDB::Table",
+              "Properties": {
+                "TableName": "Empleados",
+                "AttributeDefinitions": [
+                  {
+                    "AttributeName": "id",
+                    "AttributeType": "S"
+                  }
+                ],
+                "KeySchema": [
+                  {
+                    "AttributeName": "id",
+                    "KeyType": "HASH"
+                  }
+                ],
+                "BillingMode": "PAY_PER_REQUEST"
+              }
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-us-east-1-37650ac3-7014",
+              "Export": {
+                "Name": "sls-empleados-app-dev-ServerlessDeploymentBucketName"
+              }
+            },
+            "GetEmpleadosLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "GetEmpleadosLambdaVersiontXlNQLKmOV458x0hVIzdPqkt91F3n6Bop8JmG1niPz4"
+              },
+              "Export": {
+                "Name": "sls-empleados-app-dev-GetEmpleadosLambdaFunctionQualifiedArn"
+              }
+            },
+            "CreateEmpleadoLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "CreateEmpleadoLambdaVersionzsygojWXBwsmy4zNycYZ1FAz7ugopPOgM6RETikE"
+              },
+              "Export": {
+                "Name": "sls-empleados-app-dev-CreateEmpleadoLambdaFunctionQualifiedArn"
+              }
+            },
+            "DeleteEmpleadoLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "DeleteEmpleadoLambdaVersion7M9sOSmo0bq9HvM0CWDRIyoKYTnritxIWrrfphH0k"
+              },
+              "Export": {
+                "Name": "sls-empleados-app-dev-DeleteEmpleadoLambdaFunctionQualifiedArn"
+              }
+            },
+            "UpdateEmpleadoLambdaFunctionQualifiedArn": {
+              "Description": "Current Lambda function version",
+              "Value": {
+                "Ref": "UpdateEmpleadoLambdaVersionvjAWLC70FpGKleTHUBYvAUUATuBnYY7hHFLvIUlhxM"
+              },
+              "Export": {
+                "Name": "sls-empleados-app-dev-UpdateEmpleadoLambdaFunctionQualifiedArn"
+              }
+            },
+            "ServiceEndpoint": {
+              "Description": "URL of the service endpoint",
+              "Value": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "https://",
+                    {
+                      "Ref": "ApiGatewayRestApi"
+                    },
+                    ".execute-api.",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ".",
+                    {
+                      "Ref": "AWS::URLSuffix"
+                    },
+                    "/dev"
+                  ]
+                ]
+              },
+              "Export": {
+                "Name": "sls-empleados-app-dev-ServiceEndpoint"
+              }
+            }
+          }
+        },
+        "vpc": {}
+      },
+      "functions": {
+        "getEmpleados": {
+          "handler": "handler.getEmpleados",
+          "events": [
+            {
+              "http": {
+                "path": "empleados",
+                "method": "get",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "empleados-app-dev-getEmpleados",
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs18.x",
+          "vpc": {},
+          "versionLogicalId": "GetEmpleadosLambdaVersiontXlNQLKmOV458x0hVIzdPqkt91F3n6Bop8JmG1niPz4"
+        },
+        "createEmpleado": {
+          "handler": "handler.createEmpleado",
+          "events": [
+            {
+              "http": {
+                "path": "empleados",
+                "method": "post",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "empleados-app-dev-createEmpleado",
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs18.x",
+          "vpc": {},
+          "versionLogicalId": "CreateEmpleadoLambdaVersionzsygojWXBwsmy4zNycYZ1FAz7ugopPOgM6RETikE"
+        },
+        "deleteEmpleado": {
+          "handler": "handler.deleteEmpleado",
+          "events": [
+            {
+              "http": {
+                "path": "empleados/{id}",
+                "method": "delete",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "empleados-app-dev-deleteEmpleado",
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs18.x",
+          "vpc": {},
+          "versionLogicalId": "DeleteEmpleadoLambdaVersion7M9sOSmo0bq9HvM0CWDRIyoKYTnritxIWrrfphH0k"
+        },
+        "updateEmpleado": {
+          "handler": "handler.updateEmpleado",
+          "events": [
+            {
+              "http": {
+                "path": "empleados/{id}",
+                "method": "put",
+                "integration": "AWS_PROXY"
+              }
+            }
+          ],
+          "name": "empleados-app-dev-updateEmpleado",
+          "package": {},
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs18.x",
+          "vpc": {},
+          "versionLogicalId": "UpdateEmpleadoLambdaVersionvjAWLC70FpGKleTHUBYvAUUATuBnYY7hHFLvIUlhxM"
+        }
+      },
+      "plugins": [
+        "serverless-offline"
+      ],
+      "resources": {
+        "Resources": {
+          "EmpleadosTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "Properties": {
+              "TableName": "Empleados",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "id",
+                  "KeyType": "HASH"
+                }
+              ],
+              "BillingMode": "PAY_PER_REQUEST"
+            }
+          }
+        },
+        "Outputs": {}
+      }
+    },
+    "serviceRawFile": "service: empleados-app\r\n\r\nprovider:\r\n  name: aws\r\n  runtime: nodejs18.x #Actualizo de nodejs14.x\r\n\r\nfunctions:\r\n  getEmpleados:\r\n    handler: handler.getEmpleados\r\n    events:\r\n      - http:\r\n          path: empleados\r\n          method: get\r\n\r\n  createEmpleado:\r\n    handler: handler.createEmpleado\r\n    events:\r\n      - http:\r\n          path: empleados\r\n          method: post\r\n\r\n  deleteEmpleado:\r\n    handler: handler.deleteEmpleado\r\n    events:\r\n      - http:\r\n          path: empleados/{id}\r\n          method: delete\r\n\r\n  updateEmpleado:\r\n    handler: handler.updateEmpleado\r\n    events:\r\n      - http:\r\n          path: empleados/{id}\r\n          method: put\r\n\r\n# Plugins (opcional)\r\nplugins:\r\n  - serverless-offline # Si quieres probar tu API localmente\r\n\r\n# Recursos adicionales (opcional)\r\nresources:\r\n  Resources:\r\n    EmpleadosTable:\r\n      Type: AWS::DynamoDB::Table\r\n      Properties:\r\n        TableName: Empleados\r\n        AttributeDefinitions:\r\n          - AttributeName: id\r\n            AttributeType: S\r\n        KeySchema:\r\n          - AttributeName: id\r\n            KeyType: HASH\r\n        BillingMode: PAY_PER_REQUEST\r\n",
+    "command": [
+      "deploy"
+    ],
+    "options": {},
+    "error": null,
+    "params": {},
+    "machineId": "b4b73328416c8c1e54466d083e59cdaa",
+    "stage": "dev",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "e1567e80-5294-4e1e-8b7c-7b8c7b21655e",
+    "orgName": "ningunas",
+    "userId": "vJMdtZVlHzKdd8lw36",
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "ningunas",
+    "subscription": null,
+    "userEmail": "beltranibarragabriel@gmail.com",
+    "serviceProviderAwsRegion": "us-east-1",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "471112835782",
+    "projectType": "traditional",
+    "versionSf": "4.3.2",
+    "serviceProviderAwsCfStackName": "empleados-app-dev",
+    "integrations": {},
+    "serviceUniqueId": "arn:aws:cloudformation:us-east-1:471112835782:stack/empleados-app-dev/29b6cb80-71cb-11ef-88c2-1230df47d293",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:471112835782:stack/empleados-app-dev/29b6cb80-71cb-11ef-88c2-1230df47d293",
+    "serviceProviderAwsCfStackCreated": "2024-09-13T12:24:46.516Z",
+    "serviceProviderAwsCfStackUpdated": null,
+    "serviceProviderAwsCfStackStatus": "CREATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "GetEmpleadosLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:471112835782:function:empleados-app-dev-getEmpleados:1",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-empleados-app-dev-GetEmpleadosLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "DeleteEmpleadoLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:471112835782:function:empleados-app-dev-deleteEmpleado:1",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-empleados-app-dev-DeleteEmpleadoLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "UpdateEmpleadoLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:471112835782:function:empleados-app-dev-updateEmpleado:1",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-empleados-app-dev-UpdateEmpleadoLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "CreateEmpleadoLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:471112835782:function:empleados-app-dev-createEmpleado:1",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-empleados-app-dev-CreateEmpleadoLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "ServiceEndpoint",
+        "OutputValue": "https://yv9hpfby00.execute-api.us-east-1.amazonaws.com/dev",
+        "Description": "URL of the service endpoint",
+        "ExportName": "sls-empleados-app-dev-ServiceEndpoint"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-us-east-1-37650ac3-7014",
+        "ExportName": "sls-empleados-app-dev-ServerlessDeploymentBucketName"
+      }
+    ]
+  }
+}

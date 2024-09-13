@@ -1,0 +1,53 @@
+service: empleados-app
+
+provider:
+  name: aws
+  runtime: nodejs18.x #Actualizo de nodejs14.x
+
+functions:
+  getEmpleados:
+    handler: handler.getEmpleados
+    events:
+      - http:
+          path: empleados
+          method: get
+
+  createEmpleado:
+    handler: handler.createEmpleado
+    events:
+      - http:
+          path: empleados
+          method: post
+
+  deleteEmpleado:
+    handler: handler.deleteEmpleado
+    events:
+      - http:
+          path: empleados/{id}
+          method: delete
+
+  updateEmpleado:
+    handler: handler.updateEmpleado
+    events:
+      - http:
+          path: empleados/{id}
+          method: put
+
+# Plugins (opcional)
+plugins:
+  - serverless-offline # Si quieres probar tu API localmente
+
+# Recursos adicionales (opcional)
+resources:
+  Resources:
+    EmpleadosTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Empleados
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        BillingMode: PAY_PER_REQUEST

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="empleadosApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro de Empleados</title>
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div ng-controller="empleadoController">
+        <div class="container">
+            <h1>Registro de Empleados</h1>
+            <a href="#" class="btn" ng-click="mostrarFormulario = !mostrarFormulario">Agregar Empleado</a>
+            <div ng-if="mostrarFormulario">
+                <form ng-submit="crearEmpleado()">
+                    <div class="input-field">
+                        <input type="text" ng-model="nuevoEmpleado.nombre" required>
+                        <label>Nombre</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="text" ng-model="nuevoEmpleado.puesto" required>
+                        <label>Puesto</label>
+                    </div>
+                    <div class="input-field">
+                        <input type="number" ng-model="nuevoEmpleado.salario" required>
+                        <label>Salario</label>
+                    </div>
+                    <button type="submit" class="btn">Guardar</button>
+                </form>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Puesto</th>
+                        <th>Salario</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="empleado in empleados">
+                        <td>{{empleado.nombre}}</td>
+                        <td>{{empleado.puesto}}</td>
+                        <td>{{empleado.salario}}</td>
+                        <td>
+                            <a href="#" class="btn red" ng-click="eliminarEmpleado(empleado._id)">Eliminar</a>
+                            <a href="#" class="btn yellow" ng-click="editarEmpleado(empleado)">Editar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <!-- AngularJS App -->
+    <script src="app.js"></script>
+    <script src="services/empleadoService.js"></script>
+    <script src="controllers/empleadoController.js"></script>
+</body>
+</html>
